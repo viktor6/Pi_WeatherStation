@@ -82,12 +82,12 @@ def readDHT11():
 # readBMP085 - Read BMP085 sensor or BMP180 (Interior temperature, atmospheric pressure and altitude sensor)
 #------------------------------------------------------------------------
 def readBMP085():
-	bmp = BMP085(0x77)
-	tempiRead = bmp.readTemperature()
+	bmp = BMP085.BMP085()
+	tempiRead = bmp.read_temperature()
 	dbgprint("Interior Temperature: " + str(tempiRead))
-	pressRead = bmp.readPressure()/100.0
+	pressRead = bmp.read_pressure()/100.0
 	dbgprint("Pressure: " + str(pressRead))
-	altitRead = bmp.readAltitude()
+	altitRead = bmp.read_altitude()
 	dbgprint("Altitude: " + str(altitRead))
 	return tempiRead, pressRead, altitRead
 	
