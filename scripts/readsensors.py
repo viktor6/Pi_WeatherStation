@@ -166,7 +166,7 @@ def readBMP085():
 #------------------------------------------------------------------------
 # writeHTML - Write HTML block to show current values
 #------------------------------------------------------------------------
-def writeHTML(ti, pa, al, ta, tb, tc, td, tg):
+def writeHTML(ti, pa, ta, tb, tc, td, tg):
     vNow = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
     html = open("/var/www/html/web/current.html", "w")	
 	
@@ -234,7 +234,7 @@ def writeHTML(ti, pa, al, ta, tb, tc, td, tg):
     html.close()
 
     curr = open("/var/www/html/web/current.txt", "w")
-    curr.write(str(vNow)+';'+str(ti)+';'+str(round(pa))+';'+str(al)+';'+str(round(ta,1))+';'+str(round(tb,1))+';'+str(round(tc,1))+';'+str(round(td,1))+';'+str(round(tg,1))+'\n')
+    curr.write(str(vNow)+';'+str(ti)+';'+str(round(pa))+';'+str(round(ta,1))+';'+str(round(tb,1))+';'+str(round(tc,1))+';'+str(round(td,1))+';'+str(round(tg,1))+'\n')
     curr.close()
 
 #------------------------------------------------------------------------
@@ -248,11 +248,11 @@ temptd = readDS18B20d()
 temptg = readDS18B20g()
 tempi, press, altit = readBMP085()
 #write to RRD archive
-cmd = '/usr/bin/rrdtool update /home/pi/bazy/weatherRRD.rrd -t tempi:press:altit:tempExt:temptb:temptc:temptd:temptg N:'
-cmd = cmd +str(tempi)+':'+str(press)+':'+str(altit)+':'+str(tempta)+':'+str(temptb)+':'+str(temptc)+':'+str(temptd)+':'+str(temptg)
+cmd = '/usr/bin/rrdtool update /home/pi/bazy/weatherRRD.rrd -t tempi:press:tempta:temptb:temptc:temptd:temptg N:'
+cmd = cmd +str(tempi)+':'+str(press)+':'+str(tempta)+':'+str(temptb)+':'+str(temptc)+':'+str(temptd)+':'+str(temptg)
 cmdStat, cmdOut = commands.getstatusoutput(cmd)
 dbgprint("RRD write result: "+str(cmdStat))
 
-writeHTML(tempi, press, altit, tempta, temptb, temptc, temptd, temptg)
+writeHTML(tempi, press, tempta, temptb, temptc, temptd, temptg)
 
 dbgprint ("End!")

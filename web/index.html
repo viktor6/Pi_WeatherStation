@@ -7,7 +7,8 @@
   <meta name="generator" content=
   "HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
 
-  <title>Raspberry Pi Vremenska postaja</title>
+  <title>Погодная станция Raspberry Pi</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
   <meta name="HandheldFriendly" content="True" />
   <!-- Bootstrap -->
@@ -57,7 +58,7 @@
     
   <div class="container">
 	<div class="container">
-          <h2>Raspberry Pi vremenska postaja</h2>
+          <h2>Погодная станция Raspberry Pi</h2>
       	  </div>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <div id="includedContent"></div>
@@ -67,7 +68,7 @@
 	
 	
 	<div class="panel panel-default">
-	<div class="panel-body"><p>Trenutni cas:
+	<div class="panel-body"><p>Текущее время:
 	<body onload=display_ct();>
     <span id='ct'></span></p></div></div>
 	
@@ -75,16 +76,18 @@
 
       <ul class="nav nav-tabs">
         <li class="active">
-		<a href="#tab1" data-toggle="tab">Zadnjih 24h</a></li>
+		<a href="#tab1" data-toggle="tab">За 4 часа</a></li>
 
-        <li><a href="#tab2" data-toggle="tab">Zadnjih 7 dni</a></li>
+        <li><a href="#tab2" data-toggle="tab">За 24 часа</a></li>
 
-        <li><a href="#tab3" data-toggle="tab">Zadnji mesec</a></li>
+        <li><a href="#tab3" data-toggle="tab">За неделю</a></li>
 
-        <li><a href="#tab4" data-toggle="tab">Zadnje leto</a></li>
+        <li><a href="#tab4" data-toggle="tab">За месяц</a></li>
+		
+		<li><a href="#tab5" data-toggle="tab">За год</a></li>
       </ul>
 
-	  <!-- Zacetek grafov za 24h -->
+	  <!-- Zacetek grafov za 4h -->
 	  
 	  <div class="tab-content">
         <div class="tab-pane active" id="tab1">
@@ -92,15 +95,57 @@
          	  
 	      <div class="row">
             <div class="col-md-6">
-            <h3>Zunanja temperatura</h3>
-            <img src='./image/tempo24h.png' class="img-responsive" /></div>
+            <h3>Наружная температура</h3>
+            <img src='./image/tempi4h.png' class="img-responsive" /></div>
 		  
 		    <div class="col-md-6">
-            <h3>Notranja Temperatura</h3>
-            <img src='./image/tempi24h.png' class="img-responsive" /></div>
+            <h3>Внутренняя температура</h3>
+            <img src='./image/tempta4h.png' class="img-responsive" /></div>
             </div>
           
 
+          <div class="row">
+            <div class="col-md-6">
+            <h3>Давление воздуха</h3>
+            <img src='./image/press4h.png' class="img-responsive" /></div>
+
+            <div class="col-md-6">
+            <h3>Относительная влажность</h3>
+            <img src='./image/temptb4h.png' class="img-responsive" /></div>
+		  </div>
+			
+		  <div class="row">
+			<div class="col-md-6">
+            <h3>Osvetljenost</h3>
+            <img src='./image/temptc4h.png' class="img-responsive" /></div>
+			
+			<div class="col-md-6">
+            <h3>Nadmorska visina</h3>
+            <img src='./image/temptd4h.png' class="img-responsive" /></div>
+		  </div>
+		  <div class="row">
+			<div class="col-md-6">
+            <h3>Osvetljenost</h3>
+            <img src='./image/temptg4h.png' class="img-responsive" /></div>
+			</div>
+		</div>
+      
+      
+		<!-- Konec grafov za 4h -->
+		<!-- Zacetek grafov za 24h -->
+        <div class="tab-pane" id="tab2">
+		<meta http-equiv="refresh" content="60" >
+          
+		  <div class="row">
+            <div class="col-md-6">
+            <h3>Zunanja temperatura</h3>
+            <img src='./image/tempi24h.png' class="img-responsive" /></div>
+		  
+		    <div class="col-md-6">
+            <h3>Notranja Temperatura</h3>
+            <img src='./image/tempta24h.png' class="img-responsive" /></div>
+          </div>
+		  
           <div class="row">
             <div class="col-md-6">
             <h3>Zracni tlak</h3>
@@ -108,34 +153,40 @@
 
             <div class="col-md-6">
             <h3>Relativna vlaznost</h3>
-            <img src='./image/humidity24h.png' class="img-responsive" /></div>
-		  </div>
-			
-		  <div class="row">
+            <img src='./image/temptb24h.png' class="img-responsive" /></div>
+          </div>
+		  
+		<div class="row">
 			<div class="col-md-6">
             <h3>Osvetljenost</h3>
-            <img src='./image/luxmeter24h.png' class="img-responsive" /></div>
+            <img src='./image/temptc24h.png' class="img-responsive" /></div>
 			
 			<div class="col-md-6">
             <h3>Nadmorska visina</h3>
-            <img src='./image/altit24h.png' class="img-responsive" /></div>
+            <img src='./image/temptd24h.png' class="img-responsive" /></div>
 		  </div>
+		  <div class="row">
+			<div class="col-md-6">
+            <h3>Osvetljenost</h3>
+            <img src='./image/temptg24h.png' class="img-responsive" /></div>
+			</div>
 		</div>
-      
-      
-		<!-- Konec grafov za 24h -->
-		<!-- Zacetek grafov za 7dni -->
-        <div class="tab-pane" id="tab2">
-		<meta http-equiv="refresh" content="60" >
-          
+		
+
+		<!-- Konec grafov za 24h  -->
+		<!-- Zacetek grafov za 7dni -->	
+        <div class="tab-pane" id="tab3">
+        <meta http-equiv="refresh" content="60" >
+		
 		  <div class="row">
             <div class="col-md-6">
             <h3>Zunanja temperatura</h3>
-            <img src='./image/tempo7d.png' class="img-responsive" /></div>
+            <img src='./image/tempi7d.png' class="img-responsive" /></div>
 		  
 		    <div class="col-md-6">
             <h3>Notranja Temperatura</h3>
-            <img src='./image/tempi7d.png' class="img-responsive" /></div>
+            <img src='./image/tempta7d.png' class="img-responsive" />
+            </div>
           </div>
 		  
           <div class="row">
@@ -145,37 +196,41 @@
 
             <div class="col-md-6">
             <h3>Relativna vlaznost</h3>
-            <img src='./image/humidity7d.png' class="img-responsive" /></div>
+            <img src='./image/temptb7d.png' class="img-responsive" /></div>
           </div>
 		  
-		<div class="row">
+		  <div class="row">
 			<div class="col-md-6">
             <h3>Osvetljenost</h3>
-            <img src='./image/luxmeter7d.png' class="img-responsive" /></div>
+            <img src='./image/temptc7d.png' class="img-responsive" /></div>
 			
 			<div class="col-md-6">
             <h3>Nadmorska visina</h3>
-            <img src='./image/altit7d.png' class="img-responsive" /></div>
+            <img src='./image/temptd7d.png' class="img-responsive" /></div>
 		  </div>
+		  <div class="row">
+			<div class="col-md-6">
+            <h3>Osvetljenost</h3>
+            <img src='./image/temptg7d.png' class="img-responsive" /></div>
+			</div>
 		</div>
-		
-
-		<!-- Konec grafov za 7dni -->
-		<!-- Zacetek grafov za 1 mesec -->	
-        <div class="tab-pane" id="tab3">
-        <meta http-equiv="refresh" content="60" >
-		
+		  
+	    <!-- Konec grafov za 7dni -->
+		<!-- Zacetek grafov za 1 1mesec -->	
+        <div class="tab-pane" id="tab4">
+		<meta http-equiv="refresh" content="60" >
+          		  
 		  <div class="row">
             <div class="col-md-6">
             <h3>Zunanja temperatura</h3>
-            <img src='./image/tempo1m.png' class="img-responsive" /></div>
+            <img src='./image/tempi1m.png' class="img-responsive" /></div>
 		  
 		    <div class="col-md-6">
             <h3>Notranja Temperatura</h3>
-            <img src='./image/tempi1m.png' class="img-responsive" />
+            <img src='./image/tempta1m.png' class="img-responsive" />
             </div>
           </div>
-		  
+
           <div class="row">
             <div class="col-md-6">
             <h3>Zracni tlak</h3>
@@ -183,33 +238,38 @@
 
             <div class="col-md-6">
             <h3>Relativna vlaznost</h3>
-            <img src='./image/humidity1m.png' class="img-responsive" /></div>
+            <img src='./image/temptb1m.png' class="img-responsive" /></div>
           </div>
 		  
-		  <div class="row">
+		 <div class="row">
 			<div class="col-md-6">
             <h3>Osvetljenost</h3>
-            <img src='./image/luxmeter1m.png' class="img-responsive" /></div>
+            <img src='./image/temptc1m.png' class="img-responsive" /></div>
 			
 			<div class="col-md-6">
             <h3>Nadmorska visina</h3>
-            <img src='./image/altit1m.png' class="img-responsive" /></div>
+            <img src='./image/temptd1m.png' class="img-responsive" /></div>
 		  </div>
+		  <div class="row">
+			<div class="col-md-6">
+            <h3>Osvetljenost</h3>
+            <img src='./image/temptg1m.png' class="img-responsive" /></div>
+			</div>
 		</div>
-		  
-	    <!-- Konec grafov za 1mesec -->
+		 
+		<!-- Konec grafov za 1mesec -->
 		<!-- Zacetek grafov za 1 leto -->	
-        <div class="tab-pane" id="tab4">
+        <div class="tab-pane" id="tab5">
 		<meta http-equiv="refresh" content="60" >
           		  
 		  <div class="row">
             <div class="col-md-6">
             <h3>Zunanja temperatura</h3>
-            <img src='./image/tempo1y.png' class="img-responsive" /></div>
+            <img src='./image/tempi1y.png' class="img-responsive" /></div>
 		  
 		    <div class="col-md-6">
             <h3>Notranja Temperatura</h3>
-            <img src='./image/tempi1y.png' class="img-responsive" />
+            <img src='./image/tempta1y.png' class="img-responsive" />
             </div>
           </div>
 
@@ -220,18 +280,23 @@
 
             <div class="col-md-6">
             <h3>Relativna vlaznost</h3>
-            <img src='./image/humidity1y.png' class="img-responsive" /></div>
+            <img src='./image/temptb1y.png' class="img-responsive" /></div>
           </div>
 		  
 		 <div class="row">
 			<div class="col-md-6">
             <h3>Osvetljenost</h3>
-            <img src='./image/luxmeter1y.png' class="img-responsive" /></div>
+            <img src='./image/temptc1y.png' class="img-responsive" /></div>
 			
 			<div class="col-md-6">
             <h3>Nadmorska visina</h3>
-            <img src='./image/altit1y.png' class="img-responsive" /></div>
+            <img src='./image/temptd1y.png' class="img-responsive" /></div>
 		  </div>
+		  <div class="row">
+			<div class="col-md-6">
+            <h3>Osvetljenost</h3>
+            <img src='./image/temptg1y.png' class="img-responsive" /></div>
+			</div>
 		</div>
 		 
 		<!-- Konec grafov za 1mesec -->
