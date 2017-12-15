@@ -140,11 +140,6 @@ LINE1:tTempINl#FFBFBF:"Temperatura zadnje leto" \
 /usr/bin/rrdtool graph $DIR2/press4h.png \
 --height=150 --width=350 \
 --start end-4h \
---upper-limit 1030 \
---lower-limit 950 \
---rigid \
---alt-y-grid \
---units-exponent 0 \
 --vertical-label "Zracni tlak (hPa)" \
 --title "Zracni tlak - Zadnjih 4h" \
 --watermark "`date`" \
@@ -170,11 +165,6 @@ LINE1:tpressl#FFEC00:"Zracni tlak zadnjih 4h\n"
 /usr/bin/rrdtool graph $DIR2/press24h.png \
 --height=150 --width=350 \
 --start end-1d \
---upper-limit 1030 \
---lower-limit 950 \
---rigid \
---alt-y-grid \
---units-exponent 0 \
 --vertical-label "Zracni tlak (hPa)" \
 --title "Zracni tlak - Zadnjih 24h" \
 --watermark "`date`" \
@@ -201,11 +191,6 @@ LINE1:tpressl#FFEC00:"Zracni tlak zadnjih 24h\n"
 /usr/bin/rrdtool graph $DIR2/press7d.png \
 --height=150 --width=350 \
 --start end-7d \
---upper-limit 1030 \
---lower-limit 950 \
---rigid \
---alt-y-grid \
---units-exponent 0 \
 --vertical-label "Zracni tlak (hPa)" \
 --title "Zracni tlak - Zadnjih 7 dni" \
 --watermark "`date`" \
@@ -232,11 +217,6 @@ LINE1:tpressl#FFEC00:"Zracni tlak zadnjih 7 dni\n"
 /usr/bin/rrdtool graph $DIR2/press1m.png \
 --height=150 --width=350 \
 --start end-5w \
---upper-limit 1030 \
---lower-limit 950 \
---rigid \
---alt-y-grid \
---units-exponent 0 \
 --vertical-label "Zracni tlak (hPa)" \
 --title "Zracni tlak - Zadnji mesec" \
 --watermark "`date`" \
