@@ -85,7 +85,7 @@ def readDS18B20b():
 def readDS18B20c():
 	
 	tempRead = -100.0
-	cmdStat, cmdOut = commands.getstatusoutput("cat /sys/bus/w1/devices/28-7d4358126461/w1_slave")
+	cmdStat, cmdOut = commands.getstatusoutput("cat /sys/bus/w1/devices/28-21ee67000900/w1_slave")
 	dbgprint("DS18B20 output: " + str(cmdOut))
 
 	# Parse output
@@ -133,7 +133,7 @@ def readDS18B20d():
 def readDS18B20g():
 	
 	tempRead = -100.0
-	cmdStat, cmdOut = commands.getstatusoutput("cat /sys/bus/w1/devices/28-7d4358126461/w1_slave")
+	cmdStat, cmdOut = commands.getstatusoutput("cat /sys/bus/w1/devices/28-21ee67000900/w1_slave")
 	dbgprint("DS18B20 output: " + str(cmdOut))
 
 	# Parse output
