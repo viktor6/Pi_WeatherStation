@@ -12,20 +12,20 @@ DIR2="/var/www/html/web/image"
 --watermark "`date`" \
 DEF:TempIN=$DIR/weatherRRD.rrd:tempi:AVERAGE \
 DEF:TempINl=$DIR/weatherRRD.rrd:tempi:AVERAGE:end=now-4h:start=end-4h \
-CDEF:tTempIN=TempIN,1800,TRENDNAN \
-CDEF:tTempINl=TempINl,1800,TRENDNAN \
-SHIFT:tTempINl:86400 \
+CDEF:tTempIN=TempIN,300,TRENDNAN \
+CDEF:tTempINl=TempINl,300,TRENDNAN \
+SHIFT:tTempINl:14400 \
 VDEF:INpct=TempIN,95,PERCENT \
-COMMENT:"     Последняя" \
-COMMENT:"Максимальна" \
-COMMENT:"Минимальна" \
+COMMENT:"     Максимальна" \
 COMMENT:"Среднее" \
+COMMENT:"Минимальна" \
+COMMENT:"Последняя" \
 AREA:tTempIN#FF660022 \
 LINE1:tTempINl#FFBFBF::dashes=2,2 \
-GPRINT:TempIN:LAST:"     %6.2lf °C" \
-GPRINT:TempIN:MAX:"%5.2lf °C" \
+GPRINT:TempIN:MAX:"     %5.2lf °C" \
+GPRINT:TempIN:AVERAGE:"  %6.2lf °C" \
 GPRINT:TempIN:MIN:"%6.2lf °C" \
-GPRINT:TempIN:AVERAGE:"%6.2lf °C" \
+GPRINT:TempIN:LAST:"%6.2lf °C" \
 LINE2:tTempIN#B40404:"Внутренняя температура" \
 LINE1:tTempINl#FFBFBF:"Температура за последние 4 часа" \
 
@@ -33,8 +33,8 @@ LINE1:tTempINl#FFBFBF:"Температура за последние 4 часа
 /usr/bin/rrdtool graph $DIR2/tempi24h.png \
 --height=150 --width=350 \
 --start end-1d \
---vertical-label "Notranja temperatura (°C)" \
---title "Notranja temperatura - Zadnjih 24h" \
+--vertical-label "Градусы Цельсия (°C)" \
+--title "Температура за последние 24 часа" \
 --watermark "`date`" \
 DEF:TempIN=$DIR/weatherRRD.rrd:tempi:AVERAGE \
 DEF:TempINl=$DIR/weatherRRD.rrd:tempi:AVERAGE:end=now-1d:start=end-1d \
@@ -42,23 +42,23 @@ CDEF:tTempIN=TempIN,1800,TRENDNAN \
 CDEF:tTempINl=TempINl,1800,TRENDNAN \
 SHIFT:tTempINl:86400 \
 VDEF:INpct=TempIN,95,PERCENT \
-COMMENT:"     Последняя" \
-COMMENT:"Максимальна" \
-COMMENT:"Минимальна" \
+COMMENT:"     Максимальна" \
 COMMENT:"Среднее" \
+COMMENT:"Минимальна" \
+COMMENT:"Последняя" \
 AREA:tTempIN#FF660022 \
 LINE1:tTempINl#FFBFBF::dashes=2,2 \
-GPRINT:TempIN:LAST:"     %6.2lf °C" \
-GPRINT:TempIN:MAX:"%5.2lf °C" \
+GPRINT:TempIN:MAX:"     %5.2lf °C" \
+GPRINT:TempIN:AVERAGE:"  %6.2lf °C" \
 GPRINT:TempIN:MIN:"%6.2lf °C" \
-GPRINT:TempIN:AVERAGE:"%6.2lf °C" \
-LINE2:tTempIN#B40404:"Notranja temperatura" \
-LINE1:tTempINl#FFBFBF:"Temperatura zadnjih 24h" \
+GPRINT:TempIN:LAST:"%6.2lf °C" \
+LINE2:tTempIN#B40404:"Внутренняя температура" \
+LINE1:tTempINl#FFBFBF:"Температура за последние 24 часа" \
 
 # Graf za notranjo temperaturo s sensorjem BMP180 - 7dni
 /usr/bin/rrdtool graph $DIR2/tempi7d.png \
 --height=150 --width=350 \
---start end-7d \
+--start end-1w \
 --vertical-label "Notranja temperatura (°C)" \
 --title "Notranja temperatura - Zadnjih 7 dni" \
 --watermark "`date`" \
@@ -68,16 +68,16 @@ CDEF:tTempIN=TempIN,12600,TRENDNAN \
 CDEF:tTempINl=TempINl,12600,TRENDNAN \
 SHIFT:tTempINl:604800 \
 VDEF:INpct=TempIN,95,PERCENT \
-COMMENT:"     Последняя" \
-COMMENT:"Максимальна" \
-COMMENT:"Минимальна" \
+COMMENT:"     Максимальна" \
 COMMENT:"Среднее" \
+COMMENT:"Минимальна" \
+COMMENT:"Последняя" \
 AREA:tTempIN#FF660022 \
 LINE1:tTempINl#FFBFBF::dashes=2,2 \
-GPRINT:TempIN:LAST:"     %6.2lf °C" \
-GPRINT:TempIN:MAX:"%5.2lf °C" \
+GPRINT:TempIN:MAX:"     %5.2lf °C" \
+GPRINT:TempIN:AVERAGE:"  %6.2lf °C" \
 GPRINT:TempIN:MIN:"%6.2lf °C" \
-GPRINT:TempIN:AVERAGE:"%6.2lf °C" \
+GPRINT:TempIN:LAST:"%6.2lf °C" \
 LINE2:tTempIN#B40404:"Notranja temperatura" \
 LINE1:tTempINl#FFBFBF:"Temperatura zadnjih 7 dni" \
 
@@ -94,16 +94,16 @@ CDEF:tTempIN=TempIN,55800,TRENDNAN \
 CDEF:tTempINl=TempINl,55800,TRENDNAN \
 SHIFT:tTempINl:2678400 \
 VDEF:INpct=TempIN,95,PERCENT \
-COMMENT:"     Последняя" \
-COMMENT:"Максимальна" \
-COMMENT:"Минимальна" \
+COMMENT:"     Максимальна" \
 COMMENT:"Среднее" \
+COMMENT:"Минимальна" \
+COMMENT:"Последняя" \
 AREA:tTempIN#FF660022 \
 LINE1:tTempINl#FFBFBF::dashes=2,2 \
-GPRINT:TempIN:LAST:"     %6.2lf °C" \
-GPRINT:TempIN:MAX:"%5.2lf °C" \
+GPRINT:TempIN:MAX:"     %5.2lf °C" \
+GPRINT:TempIN:AVERAGE:"  %6.2lf °C" \
 GPRINT:TempIN:MIN:"%6.2lf °C" \
-GPRINT:TempIN:AVERAGE:"%6.2lf °C" \
+GPRINT:TempIN:LAST:"%6.2lf °C" \
 LINE2:tTempIN#B40404:"Notranja temperatura" \
 LINE1:tTempINl#FFBFBF:"Temperatura zadnji mesec" \
 
@@ -120,16 +120,16 @@ CDEF:tTempIN=TempIN,657000,TRENDNAN \
 CDEF:tTempINl=TempINl,657000,TRENDNAN \
 SHIFT:tTempINl:31536000 \
 VDEF:INpct=TempIN,95,PERCENT \
-COMMENT:"     Последняя" \
-COMMENT:"Максимальна" \
-COMMENT:"Минимальна" \
+COMMENT:"     Максимальна" \
 COMMENT:"Среднее" \
+COMMENT:"Минимальна" \
+COMMENT:"Последняя" \
 AREA:tTempIN#FF660022 \
 LINE1:tTempINl#FFBFBF::dashes=2,2 \
-GPRINT:TempIN:LAST:"     %6.2lf °C" \
-GPRINT:TempIN:MAX:"%5.2lf °C" \
+GPRINT:TempIN:MAX:"     %5.2lf °C" \
+GPRINT:TempIN:AVERAGE:"  %6.2lf °C" \
 GPRINT:TempIN:MIN:"%6.2lf °C" \
-GPRINT:TempIN:AVERAGE:"%6.2lf °C" \
+GPRINT:TempIN:LAST:"%6.2lf °C" \
 LINE2:tTempIN#B40404:"Notranja temperatura" \
 LINE1:tTempINl#FFBFBF:"Temperatura zadnje leto" \
 
@@ -145,9 +145,9 @@ LINE1:tTempINl#FFBFBF:"Temperatura zadnje leto" \
 --watermark "`date`" \
 DEF:press=$DIR/weatherRRD.rrd:press:AVERAGE \
 DEF:pressl=$DIR/weatherRRD.rrd:press:AVERAGE:end=now-4h:start=end-4h \
-CDEF:tpress=press,1800,TRENDNAN \
-CDEF:tpressl=pressl,1800,TRENDNAN \
-SHIFT:tpressl:86400 \
+CDEF:tpress=press,300,TRENDNAN \
+CDEF:tpressl=pressl,300,TRENDNAN \
+SHIFT:tpressl:14400 \
 COMMENT:"     Последняя" \
 COMMENT:"Максимальна" \
 COMMENT:"Минимальна" \
@@ -279,9 +279,9 @@ LINE1:tpressl#FFEC00:"Zracni tlak zadnje leto\n"
 --watermark "`date`" \
 DEF:TempOUT=$DIR/weatherRRD.rrd:tempta:AVERAGE \
 DEF:TempOUTl=$DIR/weatherRRD.rrd:tempta:AVERAGE:end=now-4h:start=end-4h \
-CDEF:tTempOUT=TempOUT,1800,TRENDNAN \
-CDEF:tTempOUTl=TempOUTl,1800,TRENDNAN \
-SHIFT:tTempOUTl:86400 \
+CDEF:tTempOUT=TempOUT,300,TRENDNAN \
+CDEF:tTempOUTl=TempOUTl,300,TRENDNAN \
+SHIFT:tTempOUTl:14400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
 COMMENT:"     Trenutna" \
 COMMENT:"Maksimalna" \
@@ -414,9 +414,9 @@ LINE1:tTempOUTl#BFC8FF:"Temperatura zadnje leto" \
 --watermark "`date`" \
 DEF:TempOUT=$DIR/weatherRRD.rrd:temptb:AVERAGE \
 DEF:TempOUTl=$DIR/weatherRRD.rrd:temptb:AVERAGE:end=now-4h:start=end-4h \
-CDEF:tTempOUT=TempOUT,1800,TRENDNAN \
-CDEF:tTempOUTl=TempOUTl,1800,TRENDNAN \
-SHIFT:tTempOUTl:86400 \
+CDEF:tTempOUT=TempOUT,300,TRENDNAN \
+CDEF:tTempOUTl=TempOUTl,300,TRENDNAN \
+SHIFT:tTempOUTl:14400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
 COMMENT:"     Trenutna" \
 COMMENT:"Maksimalna" \
@@ -549,9 +549,9 @@ LINE1:tTempOUTl#BFC8FF:"Temperatura zadnje leto" \
 --watermark "`date`" \
 DEF:TempOUT=$DIR/weatherRRD.rrd:temptc:AVERAGE \
 DEF:TempOUTl=$DIR/weatherRRD.rrd:temptc:AVERAGE:end=now-4h:start=end-4h \
-CDEF:tTempOUT=TempOUT,1800,TRENDNAN \
-CDEF:tTempOUTl=TempOUTl,1800,TRENDNAN \
-SHIFT:tTempOUTl:86400 \
+CDEF:tTempOUT=TempOUT,300,TRENDNAN \
+CDEF:tTempOUTl=TempOUTl,300,TRENDNAN \
+SHIFT:tTempOUTl:14400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
 COMMENT:"     Trenutna" \
 COMMENT:"Maksimalna" \
@@ -684,9 +684,9 @@ LINE1:tTempOUTl#BFC8FF:"Temperatura zadnje leto" \
 --watermark "`date`" \
 DEF:TempOUT=$DIR/weatherRRD.rrd:temptd:AVERAGE \
 DEF:TempOUTl=$DIR/weatherRRD.rrd:temptd:AVERAGE:end=now-4h:start=end-4h \
-CDEF:tTempOUT=TempOUT,1800,TRENDNAN \
-CDEF:tTempOUTl=TempOUTl,1800,TRENDNAN \
-SHIFT:tTempOUTl:86400 \
+CDEF:tTempOUT=TempOUT,300,TRENDNAN \
+CDEF:tTempOUTl=TempOUTl,300,TRENDNAN \
+SHIFT:tTempOUTl:14400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
 COMMENT:"     Trenutna" \
 COMMENT:"Maksimalna" \
@@ -819,9 +819,9 @@ LINE1:tTempOUTl#BFC8FF:"Temperatura zadnje leto" \
 --watermark "`date`" \
 DEF:TempOUT=$DIR/weatherRRD.rrd:temptg:AVERAGE \
 DEF:TempOUTl=$DIR/weatherRRD.rrd:temptg:AVERAGE:end=now-4h:start=end-4h \
-CDEF:tTempOUT=TempOUT,1800,TRENDNAN \
-CDEF:tTempOUTl=TempOUTl,1800,TRENDNAN \
-SHIFT:tTempOUTl:86400 \
+CDEF:tTempOUT=TempOUT,300,TRENDNAN \
+CDEF:tTempOUTl=TempOUTl,300,TRENDNAN \
+SHIFT:tTempOUTl:14400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
 COMMENT:"     Trenutna" \
 COMMENT:"Maksimalna" \
