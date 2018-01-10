@@ -32,11 +32,35 @@ def dbgprint (vString):
 			print str(timestamp) + " - " + vString
 
 #------------------------------------------------------------------------
-# readDS18B20 - Read DS18B20 sensor (exterior temperature)
+# readDS18B20 - Read DS18B20 sensor (exterior temperature) Температура на Улице
 #------------------------------------------------------------------------
 def readDS18B20a():
 	
-	tempRead = -100.0
+	tempRead = -0
+	cmdStat, cmdOut = commands.getstatusoutput("cat /sys/bus/w1/devices/28-1f653c126461/w1_slave")
+	dbgprint("DS18B20 output: " + str(cmdOut))
+
+	# Parse output
+	if cmdStat == 0:
+		matchObj = re.search(r'.*crc=\S*\s(\S*)[\n].*t=(.*)',cmdOut,re.I)
+		if matchObj:
+			if matchObj.group(1) == 'YES':
+				tempRead = float(int(matchObj.group(2))/1000.0-1)
+				dbgprint("Exterior Temperature: "+str(tempRead))
+			else:
+				dbgprint("DS18B20 returned CRC error.")
+		else:
+			dbgprint("No match during DS18B20 output parse!!")
+	else:
+		dbgprint("Error reading DS18B20 sensor")
+	return tempRead
+
+#------------------------------------------------------------------------
+# readDS18B20 - Read DS18B20 sensor (exterior temperature) Температура на Балконе
+#------------------------------------------------------------------------
+def readDS18B20b():
+	
+	tempRead = -0
 	cmdStat, cmdOut = commands.getstatusoutput("cat /sys/bus/w1/devices/28-ab4058126461/w1_slave")
 	dbgprint("DS18B20 output: " + str(cmdOut))
 
@@ -53,39 +77,15 @@ def readDS18B20a():
 			dbgprint("No match during DS18B20 output parse!!")
 	else:
 		dbgprint("Error reading DS18B20 sensor")
-	return tempRead
-
-#------------------------------------------------------------------------
-# readDS18B20 - Read DS18B20 sensor (exterior temperature)
-#------------------------------------------------------------------------
-def readDS18B20b():
-	
-	tempRead = -100.0
-	cmdStat, cmdOut = commands.getstatusoutput("cat /sys/bus/w1/devices/28-7d4358126461/w1_slave")
-	dbgprint("DS18B20 output: " + str(cmdOut))
-
-	# Parse output
-	if cmdStat == 0:
-		matchObj = re.search(r'.*crc=\S*\s(\S*)[\n].*t=(.*)',cmdOut,re.I)
-		if matchObj:
-			if matchObj.group(1) == 'YES':
-				tempRead = float(int(matchObj.group(2))/1000.0)
-				dbgprint("Exterior Temperature: "+str(tempRead))
-			else:
-				dbgprint("DS18B20 returned CRC error.")
-		else:
-			dbgprint("No match during DS18B20 output parse!!")
-	else:
-		dbgprint("Error reading DS18B20 sensor")
 	return tempRead	
 
 #------------------------------------------------------------------------
-# readDS18B20 - Read DS18B20 sensor (exterior temperature)
+# readDS18B20 - Read DS18B20 sensor (exterior temperature) Температура на Кухне
 #------------------------------------------------------------------------
 def readDS18B20c():
 	
-	tempRead = -100.0
-	cmdStat, cmdOut = commands.getstatusoutput("cat /sys/bus/w1/devices/28-21ee67000900/w1_slave")
+	tempRead = -0
+	cmdStat, cmdOut = commands.getstatusoutput("cat /sys/bus/w1/devices/28-bff027126461/w1_slave")
 	dbgprint("DS18B20 output: " + str(cmdOut))
 
 	# Parse output
@@ -104,12 +104,12 @@ def readDS18B20c():
 	return tempRead
 
 #------------------------------------------------------------------------
-# readDS18B20 - Read DS18B20 sensor (exterior temperature)
+# readDS18B20 - Read DS18B20 sensor (exterior temperature) Температура в комнатной батареи
 #------------------------------------------------------------------------
 def readDS18B20d():
 	
-	tempRead = -100.0
-	cmdStat, cmdOut = commands.getstatusoutput("cat /sys/bus/w1/devices/28-7d4358126461/w1_slave")
+	tempRead = -0
+	cmdStat, cmdOut = commands.getstatusoutput("cat /sys/bus/w1/devices/28-5ee327126461/w1_slave")
 	dbgprint("DS18B20 output: " + str(cmdOut))
 
 	# Parse output
@@ -128,11 +128,11 @@ def readDS18B20d():
 	return tempRead	
 
 #------------------------------------------------------------------------
-# readDS18B20 - Read DS18B20 sensor (exterior temperature)
+# readDS18B20 - Read DS18B20 sensor (exterior temperature) Температура на Кухне в батареи
 #------------------------------------------------------------------------
 def readDS18B20g():
 	
-	tempRead = -100.0
+	tempRead = 0
 	cmdStat, cmdOut = commands.getstatusoutput("cat /sys/bus/w1/devices/28-21ee67000900/w1_slave")
 	dbgprint("DS18B20 output: " + str(cmdOut))
 
@@ -173,7 +173,7 @@ def writeHTML(ti, pa, ta, tb, tc, td, tg):
     html.write('    	<div class="row">\n')
     html.write('			<div class="col-md-12">\n')
     html.write('  				<div class="panel panel-primary">\n')
-    html.write('  	  				<div class="panel-heading" style="text-align:left">Дата и время последнего обновления1: '+str(vNow)+'</div>\n')
+    html.write('  	  				<div class="panel-heading" style="text-align:left">Дата и время последнего обновления: '+str(vNow)+'</div>\n')
     html.write('					<div class="panel-body">\n')
     html.write('		<div class="row">\n')
     html.write('			<div class="col-md-2">\n')
