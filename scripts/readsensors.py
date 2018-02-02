@@ -3,7 +3,7 @@
 import commands
 import os
 import sys
-sys.path.append("/home/pi/bazy/library/Adafruit_BMP085")
+sys.path.append("/home/pi/scripts/library/Adafruit_BMP085")
 import re
 import datetime
 import subprocess
@@ -85,7 +85,7 @@ def readDS18B20b():
 def readDS18B20c():
 	
 	tempRead = -0
-	cmdStat, cmdOut = commands.getstatusoutput("cat /sys/bus/w1/devices/28-bff027126461/w1_slave")
+	cmdStat, cmdOut = commands.getstatusoutput("cat /sys/bus/w1/devices/28-ab4058126461/w1_slave")
 	dbgprint("DS18B20 output: " + str(cmdOut))
 
 	# Parse output
@@ -133,7 +133,7 @@ def readDS18B20d():
 def readDS18B20g():
 	
 	tempRead = 0
-	cmdStat, cmdOut = commands.getstatusoutput("cat /sys/bus/w1/devices/28-21ee67000900/w1_slave")
+	cmdStat, cmdOut = commands.getstatusoutput("cat /sys/bus/w1/devices/28-ab4058126461/w1_slave")
 	dbgprint("DS18B20 output: " + str(cmdOut))
 
 	# Parse output
@@ -168,7 +168,7 @@ def readBMP085():
 #------------------------------------------------------------------------
 def writeHTML(ti, pa, ta, tb, tc, td, tg):
     vNow = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-    html = open("/var/www/html/web/current.html", "w")	
+    html = open("/var/www/html/current.html", "w")	
 	
     html.write('    	<div class="row">\n')
     html.write('			<div class="col-md-12">\n')
@@ -233,7 +233,7 @@ def writeHTML(ti, pa, ta, tb, tc, td, tg):
     html.write('				</div>\n')
     html.close()
 
-    curr = open("/var/www/html/web/current.txt", "w")
+    curr = open("/var/www/html/current.txt", "w")
     curr.write(str(vNow)+';'+str(ti)+';'+str(round(pa))+';'+str(round(ta,1))+';'+str(round(tb,1))+';'+str(round(tc,1))+';'+str(round(td,1))+';'+str(round(tg,1))+'\n')
     curr.close()
 
@@ -248,7 +248,7 @@ temptd = readDS18B20d()
 temptg = readDS18B20g()
 tempi, press, altit = readBMP085()
 #write to RRD archive
-cmd = '/usr/bin/rrdtool update /home/pi/bazy/weatherRRD.rrd -t tempi:press:tempta:temptb:temptc:temptd:temptg N:'
+cmd = '/usr/bin/rrdtool update /home/pi/scripts/weatherRRD.rrd -t tempi:press:tempta:temptb:temptc:temptd:temptg N:'
 cmd = cmd +str(tempi)+':'+str(press)+':'+str(tempta)+':'+str(temptb)+':'+str(temptc)+':'+str(temptd)+':'+str(temptg)
 cmdStat, cmdOut = commands.getstatusoutput(cmd)
 dbgprint("RRD write result: "+str(cmdStat))

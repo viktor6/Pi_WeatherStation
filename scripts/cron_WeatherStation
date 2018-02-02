@@ -1,0 +1,5 @@
+#!/bin/bash
+
+*/2 * * * * python /home/pi/scripts/readsensors.py
+*/5 * * * * /home/pi/scripts/rrdGraphs.sh
+

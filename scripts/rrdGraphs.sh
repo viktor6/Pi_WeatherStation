@@ -1,6 +1,6 @@
 #!/bin/bash
-DIR="/home/pi/bazy" 
-DIR2="/var/www/html/web/image" 
+DIR="/home/pi/scripts" 
+DIR2="/var/www/html/image" 
 
 
 # Graf za notranjo temperaturo s sensorjem BMP180 - 4h

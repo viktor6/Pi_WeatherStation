@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -e /home/pi/bazy/weatherRRD.rrd ]
+if [ ! -e weatherRRD.rrd ]
 then { echo "Создаю базу данных";
 
 # Procesor
