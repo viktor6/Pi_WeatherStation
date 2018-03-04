@@ -2,6 +2,10 @@
 DIR="/home/pi/scripts" 
 DIR2="/var/www/html/image" 
 
+MAX="Максимальна"
+MIN="Минимальна"
+AVERAGE="Среднее"
+LAST="Последняя"
 
 # Graf za notranjo temperaturo s sensorjem BMP180 - 4h
 /usr/bin/rrdtool graph $DIR2/tempi4h.png \
@@ -16,13 +20,14 @@ CDEF:tTempIN=TempIN,300,TRENDNAN \
 CDEF:tTempINl=TempINl,300,TRENDNAN \
 SHIFT:tTempINl:14400 \
 VDEF:INpct=TempIN,95,PERCENT \
-COMMENT:"     Максимальна" \
-COMMENT:"Среднее" \
-COMMENT:"Минимальна" \
-COMMENT:"Последняя" \
+COMMENT:" " \
+COMMENT:$MAX \
+COMMENT:$AVERAGE \
+COMMENT:$MIN \
+COMMENT:$LAST \
 AREA:tTempIN#FF660022 \
 LINE1:tTempINl#FFBFBF::dashes=2,2 \
-GPRINT:TempIN:MAX:"     %5.2lf °C" \
+GPRINT:TempIN:MAX:"      %5.2lf °C" \
 GPRINT:TempIN:AVERAGE:"  %6.2lf °C" \
 GPRINT:TempIN:MIN:"%6.2lf °C" \
 GPRINT:TempIN:LAST:"%6.2lf °C" \
@@ -143,15 +148,19 @@ LINE1:tTempINl#FFBFBF:"Temperatura zadnje leto" \
 --vertical-label "Zracni tlak (hPa)" \
 --title "Zracni tlak - Zadnjih 4h" \
 --watermark "`date`" \
+--upper-limit 775 \
+--lower-limit 740 \
+--rigid \
 DEF:press=$DIR/weatherRRD.rrd:press:AVERAGE \
 DEF:pressl=$DIR/weatherRRD.rrd:press:AVERAGE:end=now-4h:start=end-4h \
 CDEF:tpress=press,300,TRENDNAN \
 CDEF:tpressl=pressl,300,TRENDNAN \
 SHIFT:tpressl:14400 \
-COMMENT:"     Последняя" \
-COMMENT:"Максимальна" \
-COMMENT:"Минимальна" \
-COMMENT:"Среднее" \
+COMMENT:" " \
+COMMENT:$MAX \
+COMMENT:$AVERAGE \
+COMMENT:$MIN \
+COMMENT:$LAST \
 AREA:tpress#FF7F0022 \
 LINE1:tpressl#FFEC00::dashes=2,2 \
 GPRINT:press:LAST:"    %6.2lf hPa" \
@@ -168,6 +177,9 @@ LINE1:tpressl#FFEC00:"Zracni tlak zadnjih 4h\n"
 --vertical-label "Zracni tlak (hPa)" \
 --title "Zracni tlak - Zadnjih 24h" \
 --watermark "`date`" \
+--upper-limit 775 \
+--lower-limit 740 \
+--rigid \
 DEF:press=$DIR/weatherRRD.rrd:press:AVERAGE \
 DEF:pressl=$DIR/weatherRRD.rrd:press:AVERAGE:end=now-1d:start=end-1d \
 CDEF:tpress=press,1800,TRENDNAN \
@@ -194,6 +206,9 @@ LINE1:tpressl#FFEC00:"Zracni tlak zadnjih 24h\n"
 --vertical-label "Zracni tlak (hPa)" \
 --title "Zracni tlak - Zadnjih 7 dni" \
 --watermark "`date`" \
+--upper-limit 775 \
+--lower-limit 740 \
+--rigid \
 DEF:press=$DIR/weatherRRD.rrd:press:AVERAGE \
 DEF:pressl=$DIR/weatherRRD.rrd:press:AVERAGE:end=now-1w:start=end-2w \
 CDEF:tpress=press,12600,TRENDNAN \
@@ -220,6 +235,9 @@ LINE1:tpressl#FFEC00:"Zracni tlak zadnjih 7 dni\n"
 --vertical-label "Zracni tlak (hPa)" \
 --title "Zracni tlak - Zadnji mesec" \
 --watermark "`date`" \
+--upper-limit 775 \
+--lower-limit 740 \
+--rigid \
 DEF:press=$DIR/weatherRRD.rrd:press:AVERAGE \
 DEF:pressl=$DIR/weatherRRD.rrd:press:AVERAGE:end=now-5w:start=end-5w \
 CDEF:tpress=press,55800,TRENDNAN \
@@ -243,14 +261,14 @@ LINE1:tpressl#FFEC00:"Zracni tlak zadnji mesec\n"
 /usr/bin/rrdtool graph $DIR2/press1y.png \
 --height=150 --width=350 \
 --start end-52w \
---upper-limit 1030 \
---lower-limit 950 \
---rigid \
 --alt-y-grid \
 --units-exponent 0 \
 --vertical-label "Zracni tlak (hPa)" \
 --title "Zracni tlak - Zadnje leto" \
 --watermark "`date`" \
+--upper-limit 775 \
+--lower-limit 740 \
+--rigid \
 DEF:press=$DIR/weatherRRD.rrd:press:AVERAGE \
 DEF:pressl=$DIR/weatherRRD.rrd:press:AVERAGE:end=now-52w:start=end-52w \
 CDEF:tpress=press,657000,TRENDNAN \
@@ -283,10 +301,11 @@ CDEF:tTempOUT=TempOUT,300,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,300,TRENDNAN \
 SHIFT:tTempOUTl:14400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -309,10 +328,11 @@ CDEF:tTempOUT=TempOUT,1800,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,1800,TRENDNAN \
 SHIFT:tTempOUTl:86400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -336,10 +356,11 @@ CDEF:tTempOUT=TempOUT,12600,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,12600,TRENDNAN \
 SHIFT:tTempOUTl:604800 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -363,10 +384,11 @@ CDEF:tTempOUT=TempOUT,55800,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,55800,TRENDNAN \
 SHIFT:tTempOUTl:2678400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -390,10 +412,11 @@ CDEF:tTempOUT=TempOUT,657000,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,657000,TRENDNAN \
 SHIFT:tTempOUTl:31536000 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -418,10 +441,11 @@ CDEF:tTempOUT=TempOUT,300,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,300,TRENDNAN \
 SHIFT:tTempOUTl:14400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -444,10 +468,11 @@ CDEF:tTempOUT=TempOUT,1800,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,1800,TRENDNAN \
 SHIFT:tTempOUTl:86400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -471,10 +496,11 @@ CDEF:tTempOUT=TempOUT,12600,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,12600,TRENDNAN \
 SHIFT:tTempOUTl:604800 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -498,10 +524,11 @@ CDEF:tTempOUT=TempOUT,55800,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,55800,TRENDNAN \
 SHIFT:tTempOUTl:2678400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -525,10 +552,11 @@ CDEF:tTempOUT=TempOUT,657000,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,657000,TRENDNAN \
 SHIFT:tTempOUTl:31536000 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -553,10 +581,11 @@ CDEF:tTempOUT=TempOUT,300,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,300,TRENDNAN \
 SHIFT:tTempOUTl:14400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -579,10 +608,11 @@ CDEF:tTempOUT=TempOUT,1800,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,1800,TRENDNAN \
 SHIFT:tTempOUTl:86400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -606,10 +636,11 @@ CDEF:tTempOUT=TempOUT,12600,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,12600,TRENDNAN \
 SHIFT:tTempOUTl:604800 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -633,10 +664,11 @@ CDEF:tTempOUT=TempOUT,55800,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,55800,TRENDNAN \
 SHIFT:tTempOUTl:2678400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -660,10 +692,11 @@ CDEF:tTempOUT=TempOUT,657000,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,657000,TRENDNAN \
 SHIFT:tTempOUTl:31536000 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -688,10 +721,11 @@ CDEF:tTempOUT=TempOUT,300,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,300,TRENDNAN \
 SHIFT:tTempOUTl:14400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -714,10 +748,11 @@ CDEF:tTempOUT=TempOUT,1800,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,1800,TRENDNAN \
 SHIFT:tTempOUTl:86400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -741,10 +776,11 @@ CDEF:tTempOUT=TempOUT,12600,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,12600,TRENDNAN \
 SHIFT:tTempOUTl:604800 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -768,10 +804,11 @@ CDEF:tTempOUT=TempOUT,55800,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,55800,TRENDNAN \
 SHIFT:tTempOUTl:2678400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -795,10 +832,11 @@ CDEF:tTempOUT=TempOUT,657000,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,657000,TRENDNAN \
 SHIFT:tTempOUTl:31536000 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -823,10 +861,11 @@ CDEF:tTempOUT=TempOUT,300,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,300,TRENDNAN \
 SHIFT:tTempOUTl:14400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -849,10 +888,11 @@ CDEF:tTempOUT=TempOUT,1800,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,1800,TRENDNAN \
 SHIFT:tTempOUTl:86400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -876,10 +916,11 @@ CDEF:tTempOUT=TempOUT,12600,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,12600,TRENDNAN \
 SHIFT:tTempOUTl:604800 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -903,10 +944,11 @@ CDEF:tTempOUT=TempOUT,55800,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,55800,TRENDNAN \
 SHIFT:tTempOUTl:2678400 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
@@ -930,10 +972,11 @@ CDEF:tTempOUT=TempOUT,657000,TRENDNAN \
 CDEF:tTempOUTl=TempOUTl,657000,TRENDNAN \
 SHIFT:tTempOUTl:31536000 \
 VDEF:OUTpct=TempOUT,95,PERCENT \
-COMMENT:"     Trenutna" \
-COMMENT:"Maksimalna" \
-COMMENT:"Minimalna" \
-COMMENT:"Povprecna" \
+COMMENT:" " \
+COMMENT:$LAST \
+COMMENT:$MAX \
+COMMENT:$MIN \
+COMMENT:$AVERAGE \
 AREA:tTempOUT#3366FF22 \
 LINE1:tTempOUTl#BFC8FF::dashes=2,2 \
 GPRINT:TempOUT:LAST:"     %6.2lf °C" \
